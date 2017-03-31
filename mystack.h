@@ -109,18 +109,19 @@ class MyStack
       if (is_empty())
         throw std::out_of_range("Stack is empty");
 
-      Link *link(tail);
-      Link *before_tail(find_link_before(tail));
+      Link *link = tail;
+      Link *before_tail = find_link_before(tail);
 
       /* Set tail to the link before tail */
-      if (before_tail == nullptr)
+      if (before_tail == nullptr){
         head = tail = nullptr;
-      else
+      }
+      else{
         tail = before_tail;
-
+        tail->next = nullptr;   
+      }
       T ret = link->item;
       delete link;
-
       return ret;
     }
 

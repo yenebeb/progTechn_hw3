@@ -38,13 +38,15 @@ BOOST_AUTO_TEST_CASE(mystack_push)
 BOOST_AUTO_TEST_CASE(mystack_push_multiple)
 {
   MyStack<int> stack;
-  std::vector<int> vector{10, 20, 30};
+  std::vector<int> vector{10, 20, 30, 40};
   stack.push_multiple(vector.begin(), vector.end());
+  stack.pop();
   BOOST_CHECK_EQUAL(stack.peek(), 30);
   stack.pop();
   BOOST_CHECK_EQUAL(stack.peek(), 20);
   stack.pop();
   BOOST_CHECK_EQUAL(stack.peek(), 10); 
+  BOOST_CHECK_EQUAL(stack.size(), 1UL);
   stack.pop();
   BOOST_CHECK_EQUAL(stack.is_empty(), true);
 }
@@ -57,11 +59,15 @@ BOOST_AUTO_TEST_CASE(mystack_push_multiple2)
   BOOST_CHECK_EQUAL(stack.peek(), 40);
   stack.pop();
   BOOST_CHECK_EQUAL(stack.peek(), 30);
+  BOOST_CHECK_EQUAL(stack.size(), 3UL);
   stack.pop();
   BOOST_CHECK_EQUAL(stack.peek(), 20);
-// stack.pop();
-//  BOOST_CHECK_EQUAL(stack.peek(), 10);
-}
+  BOOST_CHECK_EQUAL(stack.size(), 2UL);
+  stack.pop();
+  BOOST_CHECK_EQUAL(stack.size(), 1UL);
+  stack.pop();
+  BOOST_CHECK_EQUAL(stack.is_empty(), true);
+ }
 
 BOOST_AUTO_TEST_CASE(mystack_peek)
 {
@@ -71,8 +77,11 @@ BOOST_AUTO_TEST_CASE(mystack_peek)
   BOOST_CHECK_EQUAL(stack.peek(), 10);
   stack.push(20);
   BOOST_CHECK_EQUAL(stack.peek(), 20);
-//  stack.pop();
- // stack.pop();
+  BOOST_CHECK_EQUAL(stack.size(), 2UL);
+  stack.pop();
+  BOOST_CHECK_EQUAL(stack.size(), 1UL);
+  stack.pop();
+  BOOST_CHECK_EQUAL(stack.is_empty(), true);
  // BOOST_CHECK_THROW(stack.peek(),std::out_of_range_error);
 }
 
@@ -83,8 +92,8 @@ BOOST_AUTO_TEST_CASE(mystack_pop)
   stack.push(40);
   stack.push(50);
   BOOST_CHECK_EQUAL(stack.pop(), 50);
-//  BOOST_CHECK_EQUAL(stack.pop(), 40);
-//  BOOST_CHECK_EQUAL(stack.pop(), 30);
+  BOOST_CHECK_EQUAL(stack.pop(), 40);
+  BOOST_CHECK_EQUAL(stack.pop(), 30);
 //  BOOST_CHECK_THROW(stack.pop(), std::out_of_range());
 }
 
